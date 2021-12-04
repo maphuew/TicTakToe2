@@ -8,6 +8,20 @@ namespace TikTakToe2
 {
     public class Player
     {
-        public char Symbol { get; set; } = 'X';
+        readonly Board _board;
+
+        public readonly char Symbol;
+
+        public Player(Board board)
+        {
+            _board = board;
+            _board.Players.Add(this);
+            Symbol = _board.Players.Count switch
+            {
+                1 => 'X',
+                2 => 'O',
+                _ => throw new NotImplementedException()
+            };
+        }
     }
 }
