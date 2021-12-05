@@ -9,20 +9,20 @@ namespace TikTakToe2Tests
         [InlineData(3)]
         [InlineData(4)]
         [InlineData(5)]
-        public void GivenDimensionX_returnsBoardOfSize(int dimension)
+        public void GivenDimensionX_returnsBoardOfSize(int boardSize)
         {
-            var board = new Board(dimension);
-            Assert.Equal(dimension, board.Grid.GetLength(0));
-            Assert.Equal(dimension, board.Grid.GetLength(1));
+            var board = new Board(boardSize);
+            Assert.Equal(boardSize, board.Grid.GetLength(0));
+            Assert.Equal(boardSize, board.Grid.GetLength(1));
         }
 
         [Theory]
         [InlineData(3)]
         [InlineData(4)]
         [InlineData(5)]
-        public void GivenDimensionX_newBoardIsEmpty(int dimesion)
+        public void GivenDimensionX_newBoardIsEmpty(int boardSize)
         {
-            var board = new Board(dimesion);
+            var board = new Board(boardSize);
             foreach (var spot in board.Grid)
             {
                 Assert.Null(spot);
@@ -37,8 +37,73 @@ namespace TikTakToe2Tests
             var board = new Board(3);
             var player1 = board.AddNewPlayer();
             Assert.Null(board.Grid[x, y]);
-            board.MakeMove(player1, x, y);
+            board.MakePlayerMove(player1, x, y);
             Assert.Equal(player1, board.Grid[x, y]);
+        }
+
+        [Theory]
+        [InlineData(3)]
+        [InlineData(4)]
+        [InlineData(5)]
+        public void CheckVerticalWinner(int boardSize)
+        {
+            var board = new Board(boardSize);
+            var player = board.AddNewPlayer();
+            for (int i = 0; i < boardSize; i++)
+            {
+                Assert.Null(board.Winner);
+                board.MakePlayerMove(player, 0, i);
+            }
+            Assert.Equal(player, board.Winner);
+        }
+
+        [Theory]
+        [InlineData(3)]
+        [InlineData(4)]
+        [InlineData(5)]
+        public void CheckHorizontalWinner(int boardSize)
+        {
+            var board = new Board(boardSize);
+            var player = board.AddNewPlayer();
+            for (int i = 0; i < boardSize; i++)
+            {
+                Assert.Null(board.Winner);
+                board.MakePlayerMove(player, i, 0);
+            }
+            Assert.Equal(player, board.Winner);
+        }
+
+
+        [Theory]
+        [InlineData(3)]
+        [InlineData(4)]
+        [InlineData(5)]
+        public void CheckDiagonalWinner1(int boardSize)
+        {
+            var board = new Board(boardSize);
+            var player = board.AddNewPlayer();
+            for (int i = 0; i < boardSize; i++)
+            {
+                Assert.Null(board.Winner);
+                board.MakePlayerMove(player, i, i);
+            }
+            Assert.Equal(player, board.Winner);
+        }
+
+        [Theory]
+        [InlineData(3)]
+        [InlineData(4)]
+        [InlineData(5)]
+        public void CheckDiagonalWinner2(int boardSize)
+        {
+            var board = new Board(boardSize);
+            var player = board.AddNewPlayer();
+            for (int i = 0; i < boardSize; i++)
+            {
+                Assert.Null(board.Winner);
+                board.MakePlayerMove(player, boardSize - i - 1, i);
+            }
+            Assert.Equal(player, board.Winner);
         }
     }
 }
