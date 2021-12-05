@@ -23,10 +23,7 @@ namespace TikTakToe2Tests
         public void GivenDimensionX_newBoardIsEmpty(int boardSize)
         {
             var board = new Board(boardSize);
-            foreach (var spot in board.Grid)
-            {
-                Assert.Null(spot);
-            }
+            AssertBoardIsEmpty(board);
         }
 
         [Theory]
@@ -104,6 +101,14 @@ namespace TikTakToe2Tests
                 board.MakePlayerMove(player, boardSize - i - 1, i);
             }
             Assert.Equal(player, board.Winner);
+        }
+
+        public static void AssertBoardIsEmpty(Board board)
+        {
+            foreach (var spot in board.Grid)
+            {
+                Assert.Null(spot);
+            }
         }
     }
 }
