@@ -12,10 +12,10 @@ namespace TikTakToe2
 
         public readonly char Symbol;
 
-        public Player(Board board)
+        internal Player(Board board)
         {
             _board = board;
-            _board.Players.Add(this);
+            _board.Players.Add(this); //TODO: Ask Aashiq which class should be responsible for this line and why
             Symbol = _board.Players.Count switch
             {
                 1 => 'X',

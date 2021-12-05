@@ -13,17 +13,17 @@ namespace TikTakToe2Tests
         [Fact]
         public void GivenOnePlayer_AssignCharacterX()
         {
-            var board = new Board();
-            var player = new Player(board);
+            var board = new Board(3);
+            var player = board.AddNewPlayer();
             Assert.Equal('X', player.Symbol);
         }
 
         [Fact]
         public static void GivenSecondPlayer_AssignCharacterY()
         {
-            var board = new Board();
-            _ = new Player(board);
-            var player2 = new Player(board);
+            var board = new Board(3);
+            _ = board.AddNewPlayer();
+            var player2 = board.AddNewPlayer();
             Assert.Equal('O', player2.Symbol);
         }
     }
