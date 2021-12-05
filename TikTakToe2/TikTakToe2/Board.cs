@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace TikTakToe2
 {
@@ -20,6 +16,17 @@ namespace TikTakToe2
         public Player AddNewPlayer()
         {
             return new Player(this);
+        }
+
+        /// <returns>True if the move was added, false the spot has already been taken</returns>
+        public bool MakeMove(Player player, int x, int y)
+        {
+            if (Grid[x, y] == null)
+            {
+                Grid[x, y] = player;
+                return true;
+            }
+            return false;
         }
     }
 }

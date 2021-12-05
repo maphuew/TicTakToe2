@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using TikTakToe2;
+﻿using TikTakToe2;
 using Xunit;
 
 namespace TikTakToe2Tests
@@ -32,6 +27,18 @@ namespace TikTakToe2Tests
             {
                 Assert.Null(spot);
             }
+        }
+
+        [Theory]
+        [InlineData(0, 0)]
+        [InlineData(2, 1)]
+        public void PlayerCanAddToBoard(int x, int y)
+        {
+            var board = new Board(3);
+            var player1 = board.AddNewPlayer();
+            Assert.Null(board.Grid[x, y]);
+            board.MakeMove(player1, x, y);
+            Assert.Equal(player1, board.Grid[x, y]);
         }
     }
 }
