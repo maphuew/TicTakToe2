@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace TikTakToe2
 {
@@ -10,6 +11,8 @@ namespace TikTakToe2
         public Player[,] Grid { get; }
 
         public Player Winner => CalculateWinner();
+
+        public List<Move> History = new();
 
         public Board(int boardSize)
         {
@@ -23,11 +26,12 @@ namespace TikTakToe2
         }
 
         /// <returns>True if the move was added, false the spot has already been taken</returns>
-        public bool MakePlayerMove(Player player, int x, int y)
+        public bool MakePlayerMove(Move move) // TODO: Ask Aashiq, should this have remained it's old constructor and created a Move inside the class? Why or why not?
         {
-            if (Grid[x, y] == null)
+            if (Grid[move.Row, move.Column] == null)
             {
-                Grid[x, y] = player;
+                Grid[move.Row, move.Column] = move.Player;
+                History.Add(move);
                 return true;
             }
             return false;
@@ -77,6 +81,20 @@ namespace TikTakToe2
                 }
             }
             return null;
+        }
+
+        public string View()
+        {
+            var view = "";
+            for (int i = 0; i < Grid.GetLength(0); i++)
+            {
+                for (int j = 0; j < Grid.GetLength(1); j++)
+                {
+                    view += (Grid[i, j]?.Symbol ?? '.') + " ";
+                }
+                view += Environment.NewLine;
+            }
+            return view;
         }
     }
 }
