@@ -10,9 +10,9 @@ namespace TikTakToe2
     {
         public Board board;
 
-        bool Over => board.Winner != null;
+        public bool GameOver => board.Winner != null;
 
-        readonly string NewLine = Environment.NewLine;
+        readonly string NL = Environment.NewLine;
 
         public Game()
         {
@@ -23,21 +23,37 @@ namespace TikTakToe2
 
         public string StartGame()
         {
-            return "Welcome to Tic Tak Toe!" + NewLine +
-                "Here's the current board:" + NewLine +
-                board.View();
+            return "Welcome to Tic Tak Toe!" + NL +
+                "Here's the current board:" + NL +
+                board.View() +
+                GetTurnPrompt();
+        }
+
+        public string GetTurnPrompt()
+        {
+            var currentPlayer = GetCurrentPlayersTurn();
+            return $"Player {currentPlayer.Number} enter a coord x,y to place your {currentPlayer.Symbol} or enter 'q' to give up:";
         }
 
         public string PlayNext(int row, int col)
         {
-            if (Over) return null;
+            if (GameOver) return null;
 
             var nextPlayer = GetCurrentPlayersTurn();
             var result = board.MakePlayerMove(new Move(nextPlayer, row, col));
             if (result)
             {
-                return "Move accepted, here's the current board:" + NewLine
-                    + board.View() + NewLine;
+                if (GameOver)
+                {
+                    return "Move accepted, well done you've won the game!" + NL + NL
+                        + board.View();
+                }
+                else
+                {
+                    return "Move accepted, here's the current board:" + NL
+                        + board.View() +
+                        GetTurnPrompt();
+                }
             }
             else
             {

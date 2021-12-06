@@ -28,9 +28,9 @@ namespace TikTakToe2
         /// <returns>True if the move was added, false the spot has already been taken</returns>
         public bool MakePlayerMove(Move move) // TODO: Ask Aashiq, should this have remained it's old constructor and created a Move inside the class? Why or why not?
         {
-            if (Grid[move.Row, move.Column] == null)
+            if (Grid[move.Row - 1, move.Column - 1] == null)
             {
-                Grid[move.Row, move.Column] = move.Player;
+                Grid[move.Row - 1, move.Column - 1] = move.Player;
                 History.Add(move);
                 return true;
             }
